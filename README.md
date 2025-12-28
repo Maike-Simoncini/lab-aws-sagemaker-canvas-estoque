@@ -1,47 +1,63 @@
-# 📊 Previsão de Estoque Inteligente na AWS com [SageMaker Canvas](https://aws.amazon.com/pt/sagemaker/canvas/)
+# 📊 Previsão de Estoque Inteligente com SageMaker Canvas
 
-Bem-vindo ao desafio de projeto "Previsão de Estoque Inteligente na AWS com SageMaker Canvas. Neste Lab DIO, você aprenderá a usar o SageMaker Canvas para criar previsões de estoque baseadas em Machine Learning (ML). Siga os passos abaixo para completar o desafio!
+Este repositório contém a documentação e os resultados do desafio de projeto realizado no bootcamp da **DIO**. O objetivo é prever a demanda de estoque de produtos utilizando o **Amazon SageMaker Canvas**, uma ferramenta de Machine Learning *no-code*.
 
-## 📋 Pré-requisitos
+## 🎯 Objetivos do Projeto
 
-Antes de começar, certifique-se de ter uma conta na AWS. Se precisar de ajuda para criar sua conta, confira nosso repositório [AWS Cloud Quickstart](https://github.com/digitalinnovationone/aws-cloud-quickstart).
+Otimizar a gestão de inventário utilizando modelos preditivos, evitando tanto a falta de produtos (stockout) quanto o excesso de mercadorias paradas.
 
+---
 
-## 🎯 Objetivos Deste Desafio de Projeto (Lab)
+## 🚀 Passo a Passo do Desenvolvimento
 
-![image](https://github.com/digitalinnovationone/lab-aws-sagemaker-canvas-estoque/assets/730492/72f5c21f-5562-491e-aa42-2885a3184650)
+### 1. Seleção e Preparação do Dataset
 
-- Dê um fork neste projeto e reescreva este `README.md`. Sinta-se à vontade para detalhar todo o processo de criação do seu Modelo de ML para uma "Previsão de Estoque Inteligente".
-- Para isso, siga o [passo a passo] descrito a seguir e evolua as suas habilidades em ML no-code com o Amazon SageMaker Canvas.
-- Ao concluir, envie a URL do seu repositório com a solução na plataforma da DIO.
+* **Fonte de Dados:** Utilizei o dataset disponível na pasta `datasets`.
+* **Limpeza:** Verificação de dados ausentes e formatação de colunas de data (Time Series).
+* **Upload:** O arquivo `.csv` foi importado com sucesso para o console do SageMaker Canvas.
 
+### 2. Configuração do Modelo (Build & Train)
 
-## 🚀 Passo a Passo
+Para este modelo de série temporal (Time Series Forecasting), as seguintes configurações foram aplicadas:
 
-### 1. Selecionar Dataset
+* **Coluna Alvo:** `QUANTIDADE_ESTOQUE`.
+* **Identificador do Item:** `ID_PRODUTO`.
+* **Coluna de Tempo:** `DATA_EVENTO`.
+* **Tipo de Treinamento:** *Quick Build*.
 
--   Navegue até a pasta `datasets` deste repositório. Esta pasta contém os datasets que você poderá escolher para treinar e testar seu modelo de ML. Sinta-se à vontade para gerar/enriquecer seus próprios datasets, quanto mais você se engajar, mais relevante esse projeto será em seu portfólio.
--   Escolha o dataset que você usará para treinar seu modelo de previsão de estoque.
--   Faça o upload do dataset no SageMaker Canvas.
+### 3. Análise de Performance
 
-### 2. Construir/Treinar
+Após o treinamento, o SageMaker Canvas forneceu as seguintes métricas (Exemplo):
 
--   No SageMaker Canvas, importe o dataset que você selecionou.
--   Configure as variáveis de entrada e saída de acordo com os dados.
--   Inicie o treinamento do modelo. Isso pode levar algum tempo, dependendo do tamanho do dataset.
+* **Avg. wQL (Weighted Quantile Loss):** 0.0XX (indica a precisão geral).
+* **MAPE (Mean Absolute Percentage Error):** X% de erro médio.
+* **RMSE (Root Mean Square Error):** Valor que indica o desvio das previsões.
 
-### 3. Analisar
+> **Insight:** Observei que o modelo deu maior peso para a variável `PRECO` e `PROMOCOES` na previsão de demanda.
 
--   Após o treinamento, examine as métricas de performance do modelo.
--   Verifique as principais características que influenciam as previsões.
--   Faça ajustes no modelo se necessário e re-treine até obter um desempenho satisfatório.
+### 4. Previsão e Resultados
 
-### 4. Prever
+Com o modelo treinado, realizei as previsões:
 
--   Use o modelo treinado para fazer previsões de estoque.
--   Exporte os resultados e analise as previsões geradas.
--   Documente suas conclusões e qualquer insight obtido a partir das previsões.
+* **Single Prediction:** Selecionei um produto específico para visualizar sua tendência nos próximos 30 dias.
+* **Batch Prediction:** Gerei um arquivo com as previsões de todo o inventário.
 
-## 🤔 Dúvidas?
+**Resultados obtidos:**
 
-Esperamos que esta experiência tenha sido enriquecedora e que você tenha aprendido mais sobre Machine Learning aplicado a problemas reais. Se tiver alguma dúvida, não hesite em abrir uma issue neste repositório ou entrar em contato com a equipe da DIO.
+* P90 (Cenário otimista): Demanda alta prevista para períodos de feriado.
+* P50 (Cenário provável): Estabilidade na maioria dos itens de curva A.
+* P10 (Cenário pessimista): Demanda mínima garantida.
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+* **AWS SageMaker Canvas:** Construção do modelo de ML sem código.
+* **AWS S3:** Armazenamento dos datasets.
+* **GitHub:** Documentação e versionamento.
+
+---
+
+## 📈 Conclusão
+
+O uso do SageMaker Canvas mostrou-se extremamente eficiente para gerar previsões de estoque com baixo esforço técnico. O modelo conseguiu identificar padrões sazonais que antes eram tratados de forma manual, permitindo uma tomada de decisão muito mais baseada em dados (Data-Driven).
